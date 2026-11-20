@@ -18,7 +18,13 @@
         {{- range slice "auto" "light" "dark" }}
         <label class="segmented__option">
           <input type="radio" name="scheme" value="{{ . }}"{{ if eq . "auto" }} checked{{ end }}>
-          <span class="preview preview--{{ . }}" aria-hidden="true"></span>
+          <span class="term-stack term-stack--{{ . }}" aria-hidden="true">
+            {{- if eq . "auto" }}
+            {{- partial "term-icon.html" "light" }}{{ partial "term-icon.html" "dark" }}
+            {{- else }}
+            {{- partial "term-icon.html" . }}
+            {{- end }}
+          </span>
           <span>{{ T (printf "scheme%s" (title .)) }}</span>
         </label>
         {{- end }}

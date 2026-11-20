@@ -1,0 +1,6 @@
+{{- /* A tiny terminal window drawn in one colour scheme. Context: "light" or "dark". Decorative. */ -}}
+<span class="term term--{{ . }}">
+  <span class="term__bar"><i></i><i></i><i></i></span>
+  <span class="term__line"><b>❯</b><span class="term__cmd"></span><span class="term__cursor"></span></span>
+  <span class="term__line term__line--out"></span>
+</span>

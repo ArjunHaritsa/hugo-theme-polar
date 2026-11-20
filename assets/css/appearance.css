@@ -91,7 +91,7 @@
   text-transform: none;
 }
 
-/* Scheme: segmented control with a mini page preview per option. */
+/* Scheme: segmented control with a terminal icon per option. */
 .segmented {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -131,52 +131,101 @@
   pointer-events: none;
 }
 
-.preview {
+/* Scheme icons: tiny terminal windows, each drawn in its own scheme with the site's
+   real colours. Auto stacks a light and a dark terminal split diagonally. */
+.term-stack {
   position: relative;
-  width: 2.5rem;
-  height: 1.6rem;
+  display: grid;
+  width: 3.2rem;
+  height: 2.2rem;
+}
+
+.term {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 3px;
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* Each preview: page background, a text line and an accent bar in that scheme. */
-.preview::before,
-.preview::after {
-  content: "";
-  position: absolute;
-  left: 0.3rem;
-  height: 0.2rem;
+.term--light { color-scheme: only light; }
+.term--dark { color-scheme: only dark; }
+
+.term-stack--auto .term--dark {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.term__bar {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  height: 0.4rem;
+  padding: 0 0.2rem;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+}
+
+.term__bar i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e0605a;
+}
+
+.term__bar i:nth-child(2) { background: #e3b341; }
+.term__bar i:nth-child(3) { background: #4fbf67; }
+
+.term__line {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  height: 0.45rem;
+  padding: 0 0.22rem;
+}
+
+.term__line b {
+  color: var(--accent);
+  font-size: 0.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.term__cmd {
+  width: 1rem;
+  height: 0.16rem;
   border-radius: 1px;
+  background: var(--text);
+  opacity: 0.55;
 }
 
-.preview::before {
-  top: 0.35rem;
-  width: 1.4rem;
+.term__cursor {
+  width: 0.28rem;
+  height: 0.42rem;
   background: var(--accent);
 }
 
-.preview::after {
-  top: 0.8rem;
-  width: 1.8rem;
-  background: currentColor;
+.term__line--out::before {
+  content: "";
+  width: 1.7rem;
+  height: 0.16rem;
+  border-radius: 1px;
+  background: var(--muted);
   opacity: 0.6;
 }
 
-.preview--light { color-scheme: only light; }
-.preview--dark { color-scheme: only dark; }
-.preview--light,
-.preview--dark { background: var(--bg); color: var(--text); }
-.preview--light::before,
-.preview--dark::before { background: light-dark(var(--accent-light), var(--accent-dark)); }
-
-.preview--auto {
-  background: linear-gradient(135deg, #fafaf8 50%, #0c0c0b 50%);
-  color: #9a9890;
+/* The selected scheme's terminal has a live, blinking cursor. */
+@media (prefers-reduced-motion: no-preference) {
+  .segmented__option:has(:checked) .term__cursor {
+    animation: term-blink 1.06s step-end infinite;
+  }
 }
 
-.preview--auto::before {
-  background: var(--accent-dark);
+@keyframes term-blink {
+  50% { opacity: 0; }
 }
 
 /* Accent swatches */
