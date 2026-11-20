@@ -8,11 +8,12 @@
 
   {{ partial "cover.html" . }}
 
-  {{- if .Param "toc" }}
-  <nav class="toc" aria-labelledby="toc-title">
-    <h2 id="toc-title">{{ .Param "tocTitle" | default (T "tableOfContents") }}</h2>
+  {{- /* Table of contents: automatic when there are 2+ headings; `toc = false` turns it off. */}}
+  {{- if and (ne (.Param "toc") false) (ge (len .Fragments.HeadingsMap) 2) }}
+  <details class="toc" open>
+    <summary class="toc__title">{{ .Param "tocTitle" | default (T "tableOfContents") }}</summary>
     {{ .TableOfContents }}
-  </nav>
+  </details>
   {{- end }}
 
   <div class="post__content prose">

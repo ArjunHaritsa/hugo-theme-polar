@@ -28,6 +28,9 @@ theme = "polar"
 
 [markup.highlight]
   noClasses = false   # let Polar colour code blocks
+
+[markup.tableOfContents]
+  endLevel = 4        # optional: include deeper headings in the TOC
 ```
 
 ## Configuration
@@ -49,6 +52,7 @@ theme = "polar"
   ]
 
 [params.logo]
+  icon = ""                  # optional first segment, e.g. a Nerd Font glyph
   text = "Your Name"          # defaults to the site title
   url = "/"                   # defaults to the home page
 
@@ -71,7 +75,7 @@ change the palette.
 | `language` | posts | Language code; sets `lang`, the font and the archive filter |
 | `tags`, `categories` | posts | Tag links; category filter chips |
 | `math` | any page | Loads MathJax |
-| `toc` / `tocTitle` | any page | Table of contents |
+| `toc` / `tocTitle` | any page | Table of contents, shown automatically with 2+ headings; `toc = false` hides it |
 | `cover` / `coverAlt` / `coverCaption` | any page | Cover image (page resource or site path) |
 | `hideComments` | any page | Disables comments |
 | `readingTime` | any page | Overrides `params.readingTime` |

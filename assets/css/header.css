@@ -7,31 +7,94 @@
   gap: 1rem;
 }
 
-/* Logo: an accent "tab" with an arrow-shaped end, drawn with clip-path. */
+/* Logo: two arrow-tipped segments (icon, name), like a shell prompt. */
 .logo {
-  --tip: 0.9rem;
+  --tip: 0.75rem;
   display: inline-flex;
-  align-items: center;
+  flex: 0 1 auto;
   min-width: 0;
   height: 2rem;
-  padding: 0 calc(var(--tip) + 0.75rem) 0 0.85rem;
-  background: var(--accent);
-  color: var(--on-accent);
   font-weight: 700;
   text-decoration: none;
-  clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%);
 }
 
-.logo__text {
+.logo__segment {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%);
+  transition: background-color var(--ease);
+}
+
+.logo__segment--icon {
+  position: relative;
+  z-index: 1;
+  padding: 0 calc(var(--tip) + 0.55rem) 0 0.7rem;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.logo__segment--text {
+  min-width: 0;
+  padding: 0 calc(var(--tip) + 0.7rem) 0 0.85rem;
   overflow: hidden;
+  background: color-mix(in srgb, var(--accent) 70%, #0c0c0b);
+  color: #ffffff;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.logo:hover {
-  background: color-mix(in srgb, var(--accent) 85%, var(--text));
+.logo__segment--icon + .logo__segment--text {
+  margin-left: calc(-1 * var(--tip));
+  padding-left: calc(var(--tip) + 0.6rem);
+}
+
+.logo:hover .logo__segment--text {
+  background: color-mix(in srgb, var(--accent) 85%, #0c0c0b);
+}
+
+/* Signal: three dots leaving the name and arriving at the appearance chip. */
+.signal {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  min-width: 2rem;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.signal__dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .signal__dot {
+    animation: signal 3s ease-in-out infinite;
+  }
+
+  .signal__dot:nth-child(2) { animation-delay: 1s; }
+  .signal__dot:nth-child(3) { animation-delay: 2s; }
+}
+
+@keyframes signal {
+  0% { opacity: 0; transform: translateX(0.25rem); }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateX(calc(100cqw - 0.75rem)); }
+}
+
+@media (max-width: 684px) {
+  .signal { visibility: hidden; }
 }
 
 .header__rule {

@@ -51,29 +51,56 @@
   border: 1px solid var(--border);
 }
 
+/* Table of contents: compact, muted, numbered by depth with accent markers. */
 .toc {
   margin: 0 0 2.5rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--accent-line);
   background: var(--bg-raised);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
 }
 
-.toc h2 {
-  margin: 0 0 0.5rem;
+.toc__title {
   color: var(--muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  cursor: pointer;
+}
+
+.toc__title::marker {
+  color: var(--accent);
+}
+
+.toc nav {
+  margin-top: 0.5rem;
 }
 
 .toc ul {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: 1rem;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.toc nav > ul {
+  padding-left: 0;
+}
+
+.toc li {
+  counter-increment: toc;
+}
+
+.toc li::before {
+  content: counters(toc, ".") " ";
+  margin-right: 0.35rem;
+  color: var(--accent);
+  font-size: 0.9em;
 }
 
 .toc a {
+  color: var(--muted);
   text-decoration: none;
 }
 

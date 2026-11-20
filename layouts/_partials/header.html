@@ -1,8 +1,17 @@
 <header class="header">
   <div class="header__bar">
     <a class="logo" href="{{ site.Params.logo.url | default site.Home.RelPermalink }}">
-      <span class="logo__text">{{ site.Params.logo.text | default site.Title }}</span>
+      {{- with site.Params.logo.icon }}
+      <span class="logo__segment logo__segment--icon" aria-hidden="true">{{ . }}</span>
+      {{- end }}
+      <span class="logo__segment logo__segment--text">{{ site.Params.logo.text | default site.Title }}</span>
     </a>
+    {{- /* Signal: dots travelling from the name out to the world (the appearance chip). */}}
+    <div class="signal" aria-hidden="true">
+      <span class="signal__dot"></span>
+      <span class="signal__dot"></span>
+      <span class="signal__dot"></span>
+    </div>
     {{ partial "appearance.html" . }}
   </div>
   <div class="header__rule" aria-hidden="true"></div>

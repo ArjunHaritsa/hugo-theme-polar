@@ -3,7 +3,7 @@
 // breaks are final from the first frame. Screen readers get the full text at once.
 import { prefersReducedMotion } from "./lib/scheme.js";
 
-const DELAY_MS = 45;
+const DELAY_MS = 28;
 
 const graphemes = text =>
   "Segmenter" in Intl
@@ -35,8 +35,13 @@ function type(element) {
     index += 1;
     done.textContent = characters.slice(0, index).join("");
     rest.textContent = characters.slice(index).join("");
-    if (index < characters.length) setTimeout(step, DELAY_MS);
-    else element.innerHTML = original; // restore any inline markup
+    if (index < characters.length) {
+      setTimeout(step, DELAY_MS);
+    } else {
+      // Restore any inline markup and leave a blinking block cursor, like a shell prompt.
+      element.innerHTML = original;
+      element.append(span("typed__caret is-idle"));
+    }
   };
 
   // Start when visible, so the animation isn't over before anyone sees it.

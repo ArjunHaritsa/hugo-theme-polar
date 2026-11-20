@@ -1,12 +1,14 @@
 {{- $lang := .Params.language -}}
+{{- /* Summary text without headings (and so without anything a TOC would list). */ -}}
+{{- $summary := .Description | default (replaceRE `(?s)<h[1-6][^>]*>.*?</h[1-6]>` "" (string .Summary)) | plainify | strings.TrimSpace -}}
 <article class="row post-row"
          data-language="{{ $lang }}"
          data-categories="{{ delimit (.Params.categories | default slice) "|" }}"
-         data-search="{{ delimit (slice .Title (delimit (.Params.tags | default slice) " ") (.Summary | plainify)) " " | lower }}">
+         data-search="{{ delimit (slice .Title (delimit (.Params.tags | default slice) " ") $summary) " " | lower }}">
   {{ partial "post-meta.html" (dict "page" .) }}
   <h2 class="row__title"{{ with $lang }} lang="{{ . }}"{{ end }}>
-    <a href="{{ .RelPermalink }}">{{ .Title }}<span class="row__arrow" aria-hidden="true">↗</span></a>
+    <a href="{{ .RelPermalink }}">{{ .Title }}<span class="row__arrow" aria-hidden="true">→</span></a>
   </h2>
-  <p class="row__summary"{{ with $lang }} lang="{{ . }}"{{ end }}>{{ .Summary | plainify | strings.TrimSpace | truncate 220 }}</p>
+  <p class="row__summary"{{ with $lang }} lang="{{ . }}"{{ end }}>{{ $summary | truncate 220 }}</p>
   {{ partial "post-tags.html" . }}
 </article>
