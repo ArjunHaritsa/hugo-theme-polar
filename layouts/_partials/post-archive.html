@@ -1,11 +1,6 @@
-{{- /* Pages grouped by year, newest first. Context: a page collection. */ -}}
+{{- /* Pages as a flat list, newest first. Context: a page collection. */ -}}
 <div class="archive">
-  {{- range .GroupByDate "2006" }}
-  <section class="archive__year" aria-labelledby="year-{{ .Key }}">
-    <h2 class="section-heading" id="year-{{ .Key }}">{{ .Key }}</h2>
-    {{- range .Pages }}
-      {{ partial "post-row.html" . }}
-    {{- end }}
-  </section>
+  {{- range .ByDate.Reverse }}
+    {{ partial "post-row.html" . }}
   {{- end }}
 </div>

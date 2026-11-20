@@ -7,7 +7,6 @@ if (form && posts.length) {
   const language = form.elements.namedItem("language");
   const categoryBox = form.querySelector(".filters__categories");
   const chips = categoryBox.querySelector(".chips");
-  const years = [...document.querySelectorAll(".archive__year")];
   const empty = document.querySelector("[data-no-results]");
 
   const state = { terms: [], language: "all", category: "all" };
@@ -25,7 +24,6 @@ if (form && posts.length) {
       post.hidden = !matches(post);
       if (!post.hidden) visible += 1;
     }
-    for (const year of years) year.hidden = !year.querySelector(".post-row:not([hidden])");
     empty.hidden = visible > 0;
   }
 
