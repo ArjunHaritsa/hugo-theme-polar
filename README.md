@@ -89,8 +89,10 @@ change the palette.
 A profile panel: round photo from `cover`, name (`name`, default `params.author`), `role`,
 a meta line (post count with `showPostCount = true`, post languages, `location`) and contact
 buttons from `links = [{ name, url, icon }]` (`icon` is optional, e.g. a Nerd Font glyph).
-`coverCaption` becomes a tagline that types itself out once without moving the layout;
-without JavaScript or with reduced motion it is plain text.
+`coverCaption` becomes a tagline typed at a shell prompt on a loop (type, hold 5s,
+backspace, retype) without ever moving the layout. Set `taglines = ["…", "…"]` to cycle
+through several lines instead. Without JavaScript or with reduced motion, the first line is
+plain text.
 
 ### Experience page (`type = "experience"`)
 

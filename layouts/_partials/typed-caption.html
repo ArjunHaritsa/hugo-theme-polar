@@ -1,6 +1,9 @@
 {{- /*
-  A tagline that types itself out once (js/typewriter.js). The text is laid out in
-  full from the first frame; typing only reveals it, so nothing re-wraps or moves.
-  Without JS or with reduced motion it is plain text. Context: the caption string.
+  A tagline typed at a shell prompt, looping (js/typewriter.js). Context: a list of
+  lines (or one string). Without JS or with reduced motion, the first line is plain text.
 */ -}}
-<p class="tagline" data-typewriter>{{ . | safeHTML }}</p>
+{{- $lines := . -}}
+{{- if reflect.IsSlice $lines | not }}{{ $lines = slice $lines }}{{ end -}}
+<p class="tagline" data-typewriter>
+  {{- range $lines }}<span class="tagline__line">{{ . | safeHTML }}</span>{{ end -}}
+</p>

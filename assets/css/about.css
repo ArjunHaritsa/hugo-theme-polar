@@ -13,7 +13,7 @@
   object-position: 40% center;
 }
 
-/* Tagline: a prompt-style line under the profile, typed out once. */
+/* Tagline: a prompt-style line under the profile, typed in a loop (js/typewriter.js). */
 .tagline {
   position: relative;
   margin: 0 0 2.5rem;
@@ -32,28 +32,58 @@
   color: var(--accent);
 }
 
-.typed__rest {
+/* Without JS (or with reduced motion) only the first line shows, as plain text. */
+.tagline__line + .tagline__line {
+  display: none;
+}
+
+/* Animated: every line is fully laid out in one grid cell (height = longest line), so
+   nothing ever re-wraps. Typing only flips character opacity; the cursor moves by
+   transform. */
+.tagline__stage {
+  position: relative;
+  display: grid;
+}
+
+.tagline__text {
+  grid-area: 1 / 1;
   visibility: hidden;
 }
 
-/* Block cursor. The span is zero-width and the block is drawn absolutely, so it covers
-   the next character cell without ever taking up space. Solid while typing (as in a
-   terminal), blinking once idle. */
-.typed__caret {
-  position: relative;
+.tagline__text.is-active {
+  visibility: visible;
 }
 
-.typed__caret::after {
-  content: "";
+.tagline__word {
+  white-space: nowrap;
+}
+
+.tagline .ch {
+  opacity: 0;
+}
+
+.tagline .ch.on {
+  opacity: 1;
+}
+
+.tagline__cursor {
   position: absolute;
-  top: 0.15em;
-  left: 0.05em;
+  top: 0;
+  left: 0;
   width: 0.6em;
   height: 1.25em;
   background: var(--accent);
+  transition: transform 60ms linear;
+  will-change: transform;
+  pointer-events: none;
 }
 
-.typed__caret.is-idle::after {
+/* Backspacing is faster than the glide, so the cursor snaps to keep up. */
+.tagline__cursor.is-erasing {
+  transition: none;
+}
+
+.tagline__cursor.is-blinking {
   animation: caret-blink 1.06s step-end infinite;
 }
 

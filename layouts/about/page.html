@@ -17,7 +17,7 @@
     </div>
   </header>
 
-  {{- with .Params.coverCaption }}
+  {{- with .Params.taglines | default .Params.coverCaption }}
   {{ partial "typed-caption.html" . }}
   {{- end }}
 
