@@ -1,0 +1,237 @@
+/* Building blocks shared by every page type, so posts, about and experience read
+   as one site: section headings, panels, rows, the meta line and tags. */
+
+/* Section heading: accent title over a hairline, optional link on the right. */
+.section-heading,
+.about__content :is(h1, h2),
+.resume__content h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin: 2.5rem 0 0;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-heading:first-child,
+.about__content > :is(h1, h2):first-child,
+.resume__content > h2:first-child {
+  margin-top: 0;
+}
+
+.section-heading__link {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-decoration: none;
+}
+
+.section-heading__link:hover {
+  color: var(--accent);
+}
+
+/* Content following a section heading starts with a little air. */
+.about__content :is(h1, h2) + *,
+.resume__content h2 + * {
+  margin-top: 1.25rem;
+}
+
+/* Rows sit directly under their heading, like the posts archive. */
+.about__content :is(h1, h2) + .row,
+.resume__content h2 + .row {
+  margin-top: 0;
+}
+
+/* Panel: raised surface for page headers and controls. */
+.panel {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+}
+
+/* Row: one entry in a list (a post, a role) — meta line, title, muted body. */
+.row {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.row > .meta,
+.row summary > .meta,
+.row .role__head > .meta {
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.row__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  line-height: 1.5;
+}
+
+.row__title a {
+  text-decoration: none;
+}
+
+.row__title a:hover {
+  color: var(--accent);
+}
+
+.row__arrow {
+  display: inline-block;
+  margin-left: 0.4em;
+  color: var(--accent);
+  font-size: 0.9em;
+  transition: transform var(--ease);
+}
+
+.row__title a:hover .row__arrow {
+  transform: translate(2px, -2px);
+}
+
+.row__summary {
+  max-width: 76ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.row .tags {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+}
+
+/* Meta line: small muted facts separated by bullets. */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.meta > * + *::before {
+  content: "•";
+  margin: 0 0.5rem;
+}
+
+.meta__accent,
+.meta__category {
+  color: var(--accent);
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.tag {
+  color: var(--accent-soft);
+  text-decoration: none;
+}
+
+.tag:hover {
+  color: var(--accent);
+}
+
+/* Link buttons (contact links etc.), styled like the main menu. */
+.link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--accent-line);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.link-list a:hover {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+/* Profile header (about and experience): photo beside name, facts and links. */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0 0 2.5rem;
+}
+
+.profile__photo {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.profile__photo img {
+  object-fit: cover;
+}
+
+.profile__photo figcaption {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.profile__info {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.profile__info > * {
+  margin: 0;
+}
+
+.profile__name {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.035em;
+}
+
+.profile__role {
+  font-weight: 500;
+}
+
+.profile__summary {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.profile .link-list {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 684px) {
+  .profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

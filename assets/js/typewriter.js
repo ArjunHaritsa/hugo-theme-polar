@@ -1,41 +1,52 @@
-// Types [data-typewriter] captions out once. The full text stays in the DOM (it reserves
-// the final wrapped size and is what assistive tech reads); this only animates a copy.
+// Types [data-typewriter] taglines out once, without layout shift: the whole text is
+// rendered from the start and the untyped remainder is merely invisible, so line
+// breaks are final from the first frame. Screen readers get the full text at once.
 import { prefersReducedMotion } from "./lib/scheme.js";
 
 const DELAY_MS = 45;
 
-const graphemes = text => {
-  if ("Segmenter" in Intl) {
-    return [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text)].map(s => s.segment);
-  }
-  return Array.from(text);
+const graphemes = text =>
+  "Segmenter" in Intl
+    ? [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text)].map(s => s.segment)
+    : Array.from(text);
+
+const span = (className, text = "") => {
+  const el = document.createElement("span");
+  el.className = className;
+  el.textContent = text;
+  return el;
 };
 
-function type(caption) {
-  const full = caption.querySelector(".typed__full");
-  const live = caption.querySelector(".typed__live");
-  if (!full || !live) return;
+function type(element) {
+  const original = element.innerHTML;
+  const characters = graphemes(element.textContent.trim());
+  if (!characters.length) return;
 
-  const characters = graphemes(full.textContent.trim());
+  const done = span("typed__done");
+  const caret = span("typed__caret");
+  const rest = span("typed__rest", characters.join(""));
+  const visual = span("typed");
+  visual.setAttribute("aria-hidden", "true");
+  visual.append(done, caret, rest);
+  element.replaceChildren(span("visually-hidden", characters.join("")), visual);
+
   let index = 0;
-  caption.classList.add("is-typing");
-
-  const finish = () => caption.classList.replace("is-typing", "is-typed");
   const step = () => {
     index += 1;
-    live.textContent = characters.slice(0, index).join("");
+    done.textContent = characters.slice(0, index).join("");
+    rest.textContent = characters.slice(index).join("");
     if (index < characters.length) setTimeout(step, DELAY_MS);
-    else finish();
+    else element.innerHTML = original; // restore any inline markup
   };
 
-  // Start once the caption is on screen, so it isn't over before anyone sees it.
+  // Start when visible, so the animation isn't over before anyone sees it.
   const observer = new IntersectionObserver(entries => {
     if (entries.some(entry => entry.isIntersecting)) {
       observer.disconnect();
-      step();
+      setTimeout(step, 300);
     }
   });
-  observer.observe(caption);
+  observer.observe(element);
 }
 
 if (!prefersReducedMotion()) {

@@ -39,7 +39,8 @@ theme = "polar"
   accent = "blue"             # default accent; any `name` from data/accents.toml
   readingTime = true
   showLastUpdated = false
-  mainSections = ["posts"]    # sections listed on the home page
+  mainSections = ["posts"]    # sections whose pages count as posts
+  homePosts = 3               # recent posts shown on the home page
   favicon = ""                # optional; defaults to an SVG in the accent colour
   copyright = ""              # optional HTML replacing the default footer
   postLanguages = [           # optional; enables the language filter
@@ -78,9 +79,11 @@ change the palette.
 
 ### About page (`type = "about"`)
 
-A round profile photo from `cover`, an optional post count (`showPostCount = true`) and
-`coverCaption`, which types itself out once. The caption wraps at any width and shows as
-plain text without JavaScript or with reduced motion.
+A profile panel: round photo from `cover`, name (`name`, default `params.author`), `role`,
+a meta line (post count with `showPostCount = true`, post languages, `location`) and contact
+buttons from `links = [{ name, url, icon }]` (`icon` is optional, e.g. a Nerd Font glyph).
+`coverCaption` becomes a tagline that types itself out once without moving the layout;
+without JavaScript or with reduced motion it is plain text.
 
 ### Experience page (`type = "experience"`)
 
@@ -96,7 +99,9 @@ Header fields: `cover`, `coverCaption`, `candidateName`, `currentRole`, `shortIn
 Details…
 ```
 
-becomes a collapsible block; roles without details stay static.
+becomes a row like a post (dates and location in the meta line, then title and company).
+Roles with details collapse; roles without details stay static. `## Headings` and tables
+pick up the shared section-heading and hairline-row styles.
 
 ## License
 

@@ -1,0 +1,13 @@
+{{- /* Bordered link buttons. Context: a list of { name, url, icon? } maps. */ -}}
+{{- with . }}
+<ul class="link-list">
+  {{- range . }}
+  <li>
+    <a href="{{ .url }}"{{ if strings.HasPrefix .url "http" }} rel="me noopener" target="_blank"{{ end }}>
+      {{- with .icon }}<span aria-hidden="true">{{ . }}</span>{{ end -}}
+      <span>{{ .name }}</span>
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- end }}

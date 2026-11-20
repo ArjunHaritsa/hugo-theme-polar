@@ -1,21 +1,24 @@
 {{ define "main" }}
 {{- .Store.Set "scripts" (slice "typewriter") }}
 <article class="about">
-  {{- with partial "cover-url.html" . }}
-  <header class="about__header">
-    <figure class="profile">
-      <img class="profile__photo" src="{{ . }}" alt="{{ $.Params.coverAlt | default (site.Params.author | default $.Title) }}" width="200" height="200" decoding="async">
-      {{- if $.Params.showPostCount }}
-      <p class="profile__count">
-        <span class="profile__count-label">{{ T "posts" }}</span>
-        <span class="profile__count-value">{{ len (partial "posts.html" $) }}</span>
-      </p>
-      {{- end }}
-      {{- with $.Params.coverCaption }}
-      {{ partial "typed-caption.html" . }}
-      {{- end }}
+  <header class="profile panel">
+    {{- with partial "cover-url.html" . }}
+    <figure class="profile__photo profile__photo--round">
+      <img src="{{ . }}" alt="{{ $.Params.coverAlt | default (site.Params.author | default $.Title) }}" width="120" height="120" decoding="async">
     </figure>
+    {{- end }}
+    <div class="profile__info">
+      <p class="profile__name">{{ .Params.name | default site.Params.author | default .Title }}</p>
+      {{- with .Params.role }}
+      <p class="profile__role">{{ . }}</p>
+      {{- end }}
+      {{ partial "profile-facts.html" . }}
+      {{ partial "link-list.html" .Params.links }}
+    </div>
   </header>
+
+  {{- with .Params.coverCaption }}
+  {{ partial "typed-caption.html" . }}
   {{- end }}
 
   <div class="about__content prose">

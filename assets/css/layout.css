@@ -75,6 +75,23 @@
   margin-bottom: 1.5rem;
 }
 
+/* Home: recent posts, centred vertically between header and footer. */
+.home {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.home__intro {
+  margin-bottom: 2.5rem;
+}
+
+.home__recent .row:last-child {
+  border-bottom: 0;
+}
+
 .listing__empty {
   padding: 3rem 1rem;
   color: var(--muted);

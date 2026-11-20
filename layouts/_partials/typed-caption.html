@@ -1,10 +1,6 @@
 {{- /*
-  A caption that types itself out once. The full text sits in the same grid cell as
-  the animated copy, reserving the final (wrapped) height, so nothing is clipped or
-  shifts at any screen width. Without JS or with reduced motion it is plain text.
-  Context: the caption string (may contain inline HTML).
+  A tagline that types itself out once (js/typewriter.js). The text is laid out in
+  full from the first frame; typing only reveals it, so nothing re-wraps or moves.
+  Without JS or with reduced motion it is plain text. Context: the caption string.
 */ -}}
-<figcaption class="typed" data-typewriter>
-  <span class="typed__full">{{ . | safeHTML }}</span>
-  <span class="typed__live" aria-hidden="true"></span>
-</figcaption>
+<p class="tagline" data-typewriter>{{ . | safeHTML }}</p>

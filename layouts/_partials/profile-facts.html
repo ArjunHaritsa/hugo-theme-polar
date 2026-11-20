@@ -1,0 +1,15 @@
+{{- /* Meta line for profile headers: post count, post languages and location. */ -}}
+{{- $facts := slice -}}
+{{- if .Params.showPostCount -}}
+  {{- $facts = $facts | append (T "postCount" (dict "Count" (len (partial "posts.html" .)))) -}}
+{{- end -}}
+{{- with site.Params.postLanguages -}}
+  {{- $labels := slice }}{{ range . }}{{ $labels = $labels | append .label }}{{ end -}}
+  {{- $facts = $facts | append (delimit $labels ", ") -}}
+{{- end -}}
+{{- with .Params.location }}{{ $facts = $facts | append . }}{{ end -}}
+{{- with $facts }}
+<p class="meta">
+  {{- range . }}<span>{{ . }}</span>{{ end -}}
+</p>
+{{- end }}

@@ -1,27 +1,25 @@
 {{ define "main" }}
 {{- .Store.Set "scripts" (slice "experience") }}
 <article class="resume">
-  <h1 class="resume__title">{{ .Title | markdownify }}</h1>
+  <h1 class="visually-hidden">{{ .Title | plainify }}</h1>
 
-  <header class="resume__header">
+  <header class="profile panel">
     {{- with partial "cover-url.html" . }}
-    <figure class="resume__photo">
-      <img src="{{ . }}" alt="{{ $.Params.coverAlt | default ($.Params.candidateName | default $.Title | plainify) }}" decoding="async">
+    <figure class="profile__photo profile__photo--frame">
+      <img src="{{ . }}" alt="{{ $.Params.coverAlt | default ($.Params.candidateName | default $.Title | plainify) }}" width="200" height="150" decoding="async">
       {{- with $.Params.coverCaption }}
       <figcaption>{{ . | safeHTML }}</figcaption>
       {{- end }}
     </figure>
     {{- end }}
 
-    <div class="resume__info">
-      {{- with .Params.candidateName }}
-      <p class="resume__name">{{ . }}</p>
-      {{- end }}
+    <div class="profile__info">
+      <p class="profile__name">{{ .Params.candidateName | default site.Params.author }}</p>
       {{- with .Params.currentRole }}
-      <p class="resume__role">{{ . }}</p>
+      <p class="profile__role">{{ . }}</p>
       {{- end }}
       {{- with .Params.shortInfo }}
-      <p class="resume__summary">{{ . }}</p>
+      <p class="profile__summary">{{ . }}</p>
       {{- end }}
       {{- with .Params.showcaseLanguages }}
       <p class="showcase">

@@ -2,7 +2,7 @@
 <div class="archive">
   {{- range .GroupByDate "2006" }}
   <section class="archive__year" aria-labelledby="year-{{ .Key }}">
-    <h2 class="archive__heading" id="year-{{ .Key }}">{{ .Key }}</h2>
+    <h2 class="section-heading" id="year-{{ .Key }}">{{ .Key }}</h2>
     {{- range .Pages }}
       {{ partial "post-row.html" . }}
     {{- end }}

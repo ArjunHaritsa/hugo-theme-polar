@@ -1,14 +1,20 @@
 {{ define "main" }}
-<div class="listing">
+{{- $sections := site.Params.mainSections | default (slice "posts") }}
+{{- $posts := first (site.Params.homePosts | default 3) (partial "posts.html" .) }}
+<div class="home">
   {{- with .Content }}
-  <div class="listing__intro prose">{{ . }}</div>
+  <div class="home__intro prose">{{ . }}</div>
   {{- end }}
-  {{- $paginator := .Paginate (partial "posts.html" .) }}
-  <div class="post-list">
-    {{- range $paginator.Pages }}
+  <section class="home__recent" aria-labelledby="recent-title">
+    <h2 class="section-heading" id="recent-title">
+      {{ T "recentPosts" }}
+      {{- with site.GetPage (index $sections 0) }}
+      <a class="section-heading__link" href="{{ .RelPermalink }}">{{ T "allPosts" }} →</a>
+      {{- end }}
+    </h2>
+    {{- range $posts }}
       {{ partial "post-row.html" . }}
     {{- end }}
-  </div>
-  {{ partial "pagination.html" . }}
+  </section>
 </div>
 {{ end }}
