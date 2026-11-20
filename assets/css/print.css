@@ -1,6 +1,6 @@
 /* Print: content only, ink-friendly. */
 @media print {
-  :root { color-scheme: light; }
+  :root { color-scheme: only light; }
 
   body { box-shadow: none; }
 

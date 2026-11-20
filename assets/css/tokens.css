@@ -1,9 +1,14 @@
 /* Design tokens.
    Colours are declared once with light-dark(); the active scheme is selected through
-   `color-scheme`, which data-scheme on <html> pins to light or dark ("auto" follows the OS). */
+   `color-scheme`, which data-scheme on <html> pins to light or dark ("auto" follows the OS).
+
+   Every scheme is declared with `only`. Without it, browsers with a forced "dark mode
+   for websites" (Samsung Internet, Edge/Chrome Auto Dark Mode) treat a light page as
+   fair game and repaint it: backgrounds darkened, text lightened, accents turned muddy.
+   `only` tells them the page renders exactly as designed in this scheme. */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: only light;
 
   --bg: light-dark(#fafaf8, #0c0c0b);
   --bg-raised: light-dark(#f1f0ec, #141413);
@@ -27,8 +32,12 @@
   --ease: 0.2s ease;
 }
 
-:root[data-scheme="light"] { color-scheme: light; }
-:root[data-scheme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: only dark; }
+}
+
+:root[data-scheme="light"] { color-scheme: only light; }
+:root[data-scheme="dark"] { color-scheme: only dark; }
 
 /* Dimmed text, for reading in the dark or on bright screens. */
 :root[data-dim] {

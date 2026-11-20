@@ -21,7 +21,7 @@
 {{- with .OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
 {{- end }}
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light dark only">
 {{- $accent := partial "accent.html" . }}
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf8">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0c0b">

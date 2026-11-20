@@ -163,8 +163,8 @@
   opacity: 0.6;
 }
 
-.preview--light { color-scheme: light; }
-.preview--dark { color-scheme: dark; }
+.preview--light { color-scheme: only light; }
+.preview--dark { color-scheme: only dark; }
 .preview--light,
 .preview--dark { background: var(--bg); color: var(--text); }
 .preview--light::before,

@@ -13,6 +13,9 @@ an about page and a résumé page, with light/dark/auto schemes and selectable a
 - **Multilingual-friendly.** Per-post `language` (e.g. Kannada posts use Noto Sans Kannada).
 - **Extras on demand.** MathJax only on pages with `math = true`; Giscus comments that follow
   the active scheme; Chroma syntax colours derived from the accent.
+- **No forced recolouring.** Declares `color-scheme: only …`, so browser "dark mode for
+  websites" features (Samsung Internet, Edge/Chrome Auto Dark Mode) leave the page alone;
+  visitors get Polar's own light or dark scheme instead.
 - **Accessible.** Skip link, visible focus, native controls, `prefers-reduced-motion` respected.
 
 Requires Hugo ≥ 0.158.0. Uses Baseline 2024 browser features (`light-dark()`, popover, `:has()`).
