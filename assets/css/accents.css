@@ -1,0 +1,8 @@
+{{- /* Generated from data/accents.toml. Context: site.Data.accents. */ -}}
+/* Accent palette. Any element with data-accent (the root, or a swatch) gets that accent. */
+[data-accent] {
+  --accent: light-dark(var(--accent-light), var(--accent-dark));
+}
+{{ range .palette }}
+[data-accent="{{ .name }}"] { --accent-light: {{ .light }}; --accent-dark: {{ .dark }}; }
+{{- end }}

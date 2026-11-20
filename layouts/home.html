@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="listing">
+  {{- with .Content }}
+  <div class="listing__intro prose">{{ . }}</div>
+  {{- end }}
+  {{- $paginator := .Paginate (partial "posts.html" .) }}
+  <div class="post-list">
+    {{- range $paginator.Pages }}
+      {{ partial "post-row.html" . }}
+    {{- end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</div>
+{{ end }}

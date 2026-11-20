@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>.bg{fill:#0c0c0b}.a{fill:{{ .dark }}}@media (prefers-color-scheme:light){.bg{fill:#fafaf8}.a{fill:{{ .light }}}}</style><rect class="bg" width="32" height="32" rx="7"/><path class="a" d="M7 25 25 7v18z"/></svg>

@@ -1,0 +1,14 @@
+{{- with site.Menus.main }}
+<nav class="menu" aria-label="Main">
+  <ul class="menu__list">
+    {{- range . }}
+    {{- $active := or ($.IsMenuCurrent "main" .) ($.HasMenuCurrent "main" .) }}
+    {{- if and (not $active) .Page }}{{ $active = eq $.FirstSection.RelPermalink .Page.RelPermalink }}{{ end }}
+    <li>
+      <a class="menu__link" href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}
+        {{- if .Params.newTab }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>
+    </li>
+    {{- end }}
+  </ul>
+</nav>
+{{- end }}

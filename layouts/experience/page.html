@@ -1,0 +1,43 @@
+{{ define "main" }}
+{{- .Store.Set "scripts" (slice "experience") }}
+<article class="resume">
+  <h1 class="resume__title">{{ .Title | markdownify }}</h1>
+
+  <header class="resume__header">
+    {{- with partial "cover-url.html" . }}
+    <figure class="resume__photo">
+      <img src="{{ . }}" alt="{{ $.Params.coverAlt | default ($.Params.candidateName | default $.Title | plainify) }}" decoding="async">
+      {{- with $.Params.coverCaption }}
+      <figcaption>{{ . | safeHTML }}</figcaption>
+      {{- end }}
+    </figure>
+    {{- end }}
+
+    <div class="resume__info">
+      {{- with .Params.candidateName }}
+      <p class="resume__name">{{ . }}</p>
+      {{- end }}
+      {{- with .Params.currentRole }}
+      <p class="resume__role">{{ . }}</p>
+      {{- end }}
+      {{- with .Params.shortInfo }}
+      <p class="resume__summary">{{ . }}</p>
+      {{- end }}
+      {{- with .Params.showcaseLanguages }}
+      <p class="showcase">
+        {{- with $.Params.showcaseText }}<span class="showcase__label" aria-hidden="true">{{ . }}</span>{{ end }}
+        <span class="showcase__items">
+          {{- range $i, $skill := . }}
+          <span class="showcase__item"{{ if eq $i 0 }} data-active{{ end }}>{{ $skill }}</span>
+          {{- end }}
+        </span>
+      </p>
+      {{- end }}
+    </div>
+  </header>
+
+  <div class="resume__content prose">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

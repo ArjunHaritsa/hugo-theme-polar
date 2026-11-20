@@ -1,0 +1,8 @@
+{{- with partial "cover-url.html" . }}
+<figure class="cover">
+  <img src="{{ . }}" alt="{{ $.Params.coverAlt | default ($.Title | plainify) }}" decoding="async">
+  {{- with $.Params.coverCaption }}
+  <figcaption>{{ . | safeHTML }}</figcaption>
+  {{- end }}
+</figure>
+{{- end }}

@@ -1,0 +1,44 @@
+{{- /*
+  Appearance control. The chip previews the active palette (background + accent);
+  the popover holds scheme, accent and dim settings. Native radios and a checkbox
+  carry state and keyboard behaviour; js/appearance.js persists and applies them.
+  Hidden when JavaScript is unavailable (the defaults then follow the OS).
+*/ -}}
+{{- $default := partial "accent.html" . -}}
+<div class="appearance">
+  <button class="appearance__toggle" type="button" popovertarget="appearance-panel"
+          aria-label="{{ T "appearance" }}" title="{{ T "appearance" }}">
+    <span class="chip" aria-hidden="true"></span>
+  </button>
+
+  <div class="appearance__panel" id="appearance-panel" popover role="dialog" aria-label="{{ T "appearance" }}">
+    <fieldset class="appearance__group">
+      <legend>{{ T "scheme" }}</legend>
+      <div class="segmented">
+        {{- range slice "auto" "light" "dark" }}
+        <label class="segmented__option">
+          <input type="radio" name="scheme" value="{{ . }}"{{ if eq . "auto" }} checked{{ end }}>
+          <span class="preview preview--{{ . }}" aria-hidden="true"></span>
+          <span>{{ T (printf "scheme%s" (title .)) }}</span>
+        </label>
+        {{- end }}
+      </div>
+    </fieldset>
+
+    <fieldset class="appearance__group">
+      <legend>{{ T "accent" }} <output class="appearance__accent-name" for="accent-swatches">{{ $default.label }}</output></legend>
+      <div class="swatches" id="accent-swatches">
+        {{- range hugo.Data.accents.palette }}
+        <label class="swatch" data-accent="{{ .name }}" title="{{ .label }}">
+          <input type="radio" name="accent" value="{{ .name }}" aria-label="{{ .label }}"{{ if eq .name $default.name }} checked{{ end }}>
+        </label>
+        {{- end }}
+      </div>
+    </fieldset>
+
+    <label class="appearance__switch">
+      <span>{{ T "dimText" }}</span>
+      <input type="checkbox" name="dim" role="switch">
+    </label>
+  </div>
+</div>

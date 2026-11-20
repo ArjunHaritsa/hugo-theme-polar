@@ -1,0 +1,273 @@
+/* Experience (résumé) page. */
+
+.resume {
+  padding: 1rem 0 2rem;
+}
+
+.resume__title {
+  margin: 0 0 1.5rem;
+  color: var(--accent);
+  font-size: 2rem;
+  text-align: center;
+}
+
+.resume__header {
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.resume__photo {
+  flex: 0 0 auto;
+  margin: 0;
+  text-align: center;
+}
+
+.resume__photo img {
+  width: 380px;
+  max-width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border: 1px solid var(--accent);
+}
+
+.resume__photo figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.resume__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding-left: 2rem;
+  border-left: 2px solid var(--border);
+}
+
+.resume__info p {
+  margin: 0;
+}
+
+.resume__name {
+  margin-bottom: 0.5rem !important;
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.resume__role {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.resume__summary {
+  margin-bottom: 1.5rem !important;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .resume__header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .resume__photo img {
+    width: 280px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .resume__info {
+    width: 100%;
+    padding: 1.5rem 0 0;
+    border-top: 2px solid var(--border);
+    border-left: 0;
+  }
+}
+
+/* Skills showcase: a static list by default, a rotating ticker with JS. */
+.showcase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.showcase__label {
+  color: var(--muted);
+}
+
+.showcase__items {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.showcase__items:not(.is-cycling) .showcase__item + .showcase__item::before {
+  content: " · ";
+  color: var(--muted);
+}
+
+.showcase__items.is-cycling {
+  position: relative;
+  display: inline-grid;
+  overflow: hidden;
+}
+
+.is-cycling .showcase__item {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.is-cycling .showcase__item[data-active] {
+  opacity: 1;
+  transform: none;
+}
+
+.is-cycling .showcase__item[data-leaving] {
+  transform: translateY(-0.6em);
+}
+
+/* Content */
+.resume__content h2 {
+  position: relative;
+  margin: 3rem 0 2rem;
+  padding-bottom: 0.75rem;
+  color: var(--accent);
+  font-size: 1.8rem;
+}
+
+.resume__content h2:first-child {
+  margin-top: 1rem;
+}
+
+.resume__content h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+}
+
+.resume__content h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.resume__content h3 code {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0;
+  background: none;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.resume__content h3 .heading-anchor {
+  display: none;
+}
+
+.resume__content p code {
+  display: inline-block;
+  margin: 0.15rem 0.25rem 0.15rem 0;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--accent-line);
+}
+
+.resume__content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.resume__content ul > li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.resume__content ul > li::before {
+  content: "▪";
+  position: absolute;
+  left: 0.3rem;
+  color: var(--accent);
+}
+
+/* A role (made collapsible by experience.js) */
+.role {
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
+  transition: border-color var(--ease), background-color var(--ease);
+}
+
+.role[open],
+details.role:hover {
+  border-color: var(--accent);
+}
+
+.role > summary,
+.role__summary {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+}
+
+.role > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.role > summary::-webkit-details-marker {
+  display: none;
+}
+
+.role > summary:hover {
+  background: var(--accent-tint);
+}
+
+.role > summary h3::before {
+  content: "▸";
+  margin-right: -0.5rem;
+  color: var(--accent);
+  transition: transform var(--ease);
+}
+
+.role[open] > summary h3::before {
+  transform: rotate(90deg);
+}
+
+.role :is(summary, .role__summary) p {
+  margin: 0.5rem 0 0;
+}
+
+.role :is(summary, .role__summary) em {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.role > :not(summary, .role__summary) {
+  margin-inline: 1.25rem;
+}
+
+.role > :last-child:not(summary, .role__summary) {
+  margin-bottom: 1rem;
+}

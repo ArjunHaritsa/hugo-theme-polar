@@ -1,0 +1,61 @@
+/* Self-hosted fonts. URLs are relative to the bundled stylesheet (/css/polar.css),
+   so they resolve when the site is served from a sub-path. */
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/JetBrainsMono/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/JetBrainsMono/jetbrains-mono-latin-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/JetBrainsMono/jetbrains-mono-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans Kannada";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/NotoSansKannada/NotoSansKannada-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans Kannada";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/NotoSansKannada/NotoSansKannada-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans Kannada";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/NotoSansKannada/NotoSansKannada-Bold.ttf") format("truetype");
+}
+
+/* Nerd Font symbols live in the Private Use Area; scoping the range keeps the
+   2 MB file from being downloaded unless a glyph is actually rendered. */
+@font-face {
+  font-family: "Symbols Nerd Font Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf") format("truetype");
+  unicode-range: U+23FB-23FE, U+2665, U+26A1, U+2B58, U+E000-F8FF, U+F0000-FFFFD;
+}

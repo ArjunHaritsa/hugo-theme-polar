@@ -1,0 +1,12 @@
+name = "Polar"
+license = "MIT"
+licenselink = "https://github.com/ArjunHaritsa/hugo-theme-polar/blob/main/LICENSE"
+description = "A calm, monospace personal site and blog theme with a filterable post archive, about and résumé pages."
+homepage = "https://github.com/ArjunHaritsa/hugo-theme-polar"
+tags = ["blog", "personal", "portfolio", "dark", "light", "minimal", "monospace", "multilingual", "responsive", "technical"]
+features = ["blog", "auto/light/dark schemes", "accent colours", "client-side search", "syntax highlighting", "math", "comments"]
+min_version = "0.158.0"
+
+[author]
+  name = "Arjun Haritsa"
+  homepage = "https://github.com/ArjunHaritsa"

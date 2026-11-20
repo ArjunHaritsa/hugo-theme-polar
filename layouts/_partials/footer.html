@@ -1,0 +1,8 @@
+<footer class="footer">
+  {{- with site.Params.copyright }}
+  <p>{{ . | safeHTML }}</p>
+  {{- else }}
+  <p>© {{ now.Year }} {{ site.Params.author | default site.Title }}</p>
+  <p>{{ T "builtWith" (dict "Hugo" `<a href="https://gohugo.io">Hugo</a>` "Theme" `<a href="https://github.com/ArjunHaritsa/hugo-theme-polar">Polar</a>`) | safeHTML }}</p>
+  {{- end }}
+</footer>

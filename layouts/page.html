@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="post"{{ with .Params.language }} lang="{{ . }}"{{ end }}>
+  <header class="post__header">
+    <h1 class="post__title">{{ .Title | markdownify }}</h1>
+    {{ partial "post-meta.html" (dict "page" . "words" true) }}
+    {{ partial "post-tags.html" . }}
+  </header>
+
+  {{ partial "cover.html" . }}
+
+  {{- if .Param "toc" }}
+  <nav class="toc" aria-labelledby="toc-title">
+    <h2 id="toc-title">{{ .Param "tocTitle" | default (T "tableOfContents") }}</h2>
+    {{ .TableOfContents }}
+  </nav>
+  {{- end }}
+
+  <div class="post__content prose">
+    {{ .Content }}
+  </div>
+
+  {{- if in (site.Params.mainSections | default (slice "posts")) .Section }}
+    {{ partial "post-nav.html" . }}
+  {{- end }}
+  {{- if not .Params.hideComments }}
+    {{ partial "comments.html" . }}
+  {{- end }}
+</article>
+{{ end }}

@@ -1,0 +1,13 @@
+{{- /*
+  Script bundles, built with esbuild. The appearance panel runs everywhere; the rest
+  only load on the pages that need them. Pages request extra bundles by name via
+  .Store.Set "scripts" from their templates.
+*/ -}}
+{{- $names := slice "appearance" -}}
+{{- with .Store.Get "scripts" }}{{ $names = $names | append . }}{{ end -}}
+{{- $opts := dict "minify" hugo.IsProduction "format" "esm" "target" "es2020" "params" (dict "palette" hugo.Data.accents.palette) -}}
+{{- range $names | uniq }}
+  {{- $js := resources.Get (printf "js/%s.js" .) | js.Build (merge $opts (dict "targetPath" (printf "js/%s.js" .))) -}}
+  {{- if hugo.IsProduction }}{{ $js = $js | fingerprint }}{{ end }}
+<script type="module" src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}"{{ end }}></script>
+{{- end }}

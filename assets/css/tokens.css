@@ -1,0 +1,41 @@
+/* Design tokens.
+   Colours are declared once with light-dark(); the active scheme is selected through
+   `color-scheme`, which data-scheme on <html> pins to light or dark ("auto" follows the OS). */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#fafaf8, #0c0c0b);
+  --bg-raised: light-dark(#f1f0ec, #141413);
+  --border: light-dark(#e2e0d8, #2a2a25);
+  --text: light-dark(#111213, #e8e6e0);
+  --muted: light-dark(#5f5d56, #9a9890);
+  --on-accent: light-dark(#ffffff, #0c0c0b);
+
+  /* --accent is set per accent in accents.css. */
+  --accent-soft: color-mix(in srgb, var(--accent) 75%, var(--text));
+  --accent-tint: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 35%, transparent);
+
+  --font-mono: "JetBrains Mono", "Noto Sans Kannada", "Symbols Nerd Font Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-kannada: "Noto Sans Kannada", "JetBrains Mono", "Symbols Nerd Font Mono", sans-serif;
+
+  --measure: 864px;
+  --gutter: 40px;
+  --radius: 4px;
+  --radius-lg: 8px;
+  --ease: 0.2s ease;
+}
+
+:root[data-scheme="light"] { color-scheme: light; }
+:root[data-scheme="dark"] { color-scheme: dark; }
+
+/* Dimmed text, for reading in the dark or on bright screens. */
+:root[data-dim] {
+  --text: light-dark(#5a5a5a, #a8a69e);
+  --muted: light-dark(#7a7972, #75736c);
+}
+
+@media (max-width: 684px) {
+  :root { --gutter: 16px; }
+}

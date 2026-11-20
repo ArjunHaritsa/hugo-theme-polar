@@ -1,0 +1,53 @@
+{{- $title := cond .IsHome site.Title (printf "%s · %s" (.Title | plainify) site.Title) -}}
+{{- $description := .Description | default .Summary -}}
+{{- if .IsHome }}{{ $description = site.Params.description | default "" }}{{ end -}}
+{{- $description = $description | plainify | strings.TrimSpace | truncate 200 -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+{{- with $description }}
+<meta name="description" content="{{ . }}">
+{{- end }}
+{{- with .Params.keywords | default site.Params.keywords }}
+<meta name="keywords" content="{{ delimit . ", " }}">
+{{- end }}
+{{- with site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{- end }}
+{{- if .Params.noindex }}
+<meta name="robots" content="noindex">
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
+{{- end }}
+<meta name="color-scheme" content="light dark">
+{{- $accent := partial "accent.html" . }}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0c0b">
+{{- with site.Params.favicon }}
+<link rel="icon" href="{{ . | relURL }}">
+{{- else }}
+{{- $icon := resources.Get "favicon.svg" | resources.ExecuteAsTemplate "favicon.svg" $accent | fingerprint }}
+<link rel="icon" type="image/svg+xml" href="{{ $icon.RelPermalink }}">
+{{- end }}
+
+{{- /* Open Graph */}}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ cond .IsHome site.Title (.Title | plainify) }}">
+{{- with $description }}
+<meta property="og:description" content="{{ . }}">
+{{- end }}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ cond .IsPage "article" "website" }}">
+<meta property="og:locale" content="{{ .Params.language | default site.Language.Lang }}">
+{{- with partial "cover-url.html" . }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{- end }}
+{{- if and .IsPage (not .Date.IsZero) }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}

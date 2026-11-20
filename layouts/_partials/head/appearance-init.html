@@ -1,0 +1,21 @@
+{{- /*
+  Applies stored appearance preferences before first paint to avoid a flash of the
+  wrong scheme or accent. Kept inline and dependency-free on purpose.
+*/ -}}
+{{- $names := slice -}}
+{{- range hugo.Data.accents.palette }}{{ $names = $names | append .name }}{{ end -}}
+<script>
+  (function () {
+    var root = document.documentElement;
+    var accents = {{ $names }};
+    function read(key) {
+      try { return localStorage.getItem("polar:" + key); } catch (e) { return null; }
+    }
+    var scheme = read("scheme");
+    if (scheme === "light" || scheme === "dark") root.dataset.scheme = scheme;
+    var accent = read("accent");
+    if (accents.indexOf(accent) !== -1) root.dataset.accent = accent;
+    if (read("dim") === "on") root.dataset.dim = "";
+    root.classList.add("js");
+  })();
+</script>

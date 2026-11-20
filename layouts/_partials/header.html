@@ -1,0 +1,10 @@
+<header class="header">
+  <div class="header__bar">
+    <a class="logo" href="{{ site.Params.logo.url | default site.Home.RelPermalink }}">
+      <span class="logo__text">{{ site.Params.logo.text | default site.Title }}</span>
+    </a>
+    {{ partial "appearance.html" . }}
+  </div>
+  <div class="header__rule" aria-hidden="true"></div>
+  {{ partial "menu.html" . }}
+</header>

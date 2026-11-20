@@ -1,0 +1,93 @@
+/* Code blocks highlighted by Hugo's Chroma (markup.highlight.noClasses = false).
+   The palette is derived from the accent so code blends with the chosen theme. */
+
+.prose pre {
+  margin: 2.5rem 0;
+  padding: 1.25rem 1rem;
+  overflow-x: auto;
+  border-block: 1px solid var(--border);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose .highlight + .highlight pre,
+.prose pre + pre {
+  margin-top: -2.5rem;
+  border-top: 0;
+}
+
+.chroma {
+  --code-keyword: var(--accent);
+  --code-string: color-mix(in srgb, var(--accent) 55%, var(--text));
+  --code-func: color-mix(in srgb, var(--accent) 70%, light-dark(#000, #999));
+  --code-name: var(--text);
+  --code-number: color-mix(in srgb, var(--accent) 40%, var(--text));
+  --code-comment: var(--muted);
+  color: var(--text);
+}
+
+/* Keywords, types, preprocessor */
+.chroma :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .cp, .cpf, .ow, .nt) { color: var(--code-keyword); }
+/* Strings and regexes */
+.chroma :is(.s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss) { color: var(--code-string); }
+/* Functions, classes, decorators */
+.chroma :is(.nf, .fm, .nc, .nd, .ne, .nb, .bp) { color: var(--code-func); }
+/* Numbers and constants */
+.chroma :is(.m, .mb, .mf, .mh, .mi, .il, .mo, .no) { color: var(--code-number); }
+/* Names, attributes, variables */
+.chroma :is(.n, .na, .nv, .vc, .vg, .vi, .vm) { color: var(--code-name); }
+/* Comments */
+.chroma :is(.c, .ch, .cm, .c1, .cs) { color: var(--code-comment); font-style: italic; }
+/* Operators and punctuation */
+.chroma :is(.o, .p) { color: var(--muted); }
+/* Diffs */
+.chroma .gd { color: light-dark(#c8102e, #ff5c6c); }
+.chroma .gi { color: light-dark(#00804f, #00d084); }
+.chroma .gh, .chroma .gu { color: var(--accent); font-weight: 700; }
+.chroma .err { color: inherit; }
+
+/* Highlighted lines and line numbers */
+.chroma .hl {
+  display: block;
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+  background: var(--accent-tint);
+}
+
+.chroma :is(.ln, .lnt) {
+  margin-right: 1rem;
+  color: var(--muted);
+  user-select: none;
+}
+
+.chroma .lntable {
+  display: table;
+  width: auto;
+  margin: 0;
+  border: 0;
+}
+
+.chroma .lntable td {
+  padding: 0;
+  border: 0;
+}
+
+.chroma .lntd pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+@media (max-width: 684px) {
+  .prose pre {
+    margin-inline: calc(-1 * var(--gutter) + 4px);
+  }
+}

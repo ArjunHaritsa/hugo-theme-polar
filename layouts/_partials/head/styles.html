@@ -1,0 +1,27 @@
+{{- /*
+  One stylesheet for the whole site: plain CSS files concatenated in cascade order,
+  minified and fingerprinted. No preprocessor, so any Hugo edition can build it.
+*/ -}}
+{{- $files := slice
+  "fonts" "tokens" "base" "layout" "header" "appearance" "prose"
+  "posts" "post" "code" "about" "experience" "print"
+-}}
+{{- $sheets := slice -}}
+{{- range $files -}}
+  {{- $sheets = $sheets | append (resources.Get (printf "css/%s.css" .)) -}}
+{{- end -}}
+{{- $accents := resources.Get "css/accents.css" | resources.ExecuteAsTemplate "css/accents.css" hugo.Data.accents -}}
+{{- $sheets = $sheets | append $accents -}}
+{{- $css := $sheets | resources.Concat "css/polar.css" -}}
+{{- if hugo.IsProduction }}{{ $css = $css | minify | fingerprint }}{{ end }}
+{{- $fonts := slice
+  "fonts/JetBrainsMono/jetbrains-mono-latin-400-normal.woff2"
+  "fonts/JetBrainsMono/jetbrains-mono-latin-700-normal.woff2"
+}}
+{{- range $fonts }}
+<link rel="preload" href="{{ . | relURL }}" as="font" type="font/woff2" crossorigin>
+{{- end }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}"{{ end }}>
+{{- if .Params.math }}
+  {{- partial "math.html" . }}
+{{- end }}

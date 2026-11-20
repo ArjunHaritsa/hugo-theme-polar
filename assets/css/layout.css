@@ -1,0 +1,105 @@
+/* Page frame: centred column with decorative side rules, and the footer. */
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--measure);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: var(--gutter);
+}
+
+/* Thin vertical rules one inch outside the text column. */
+.container::before,
+.container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+.container::before { left: calc(var(--gutter) - 96px); }
+.container::after { right: calc(var(--gutter) - 96px); }
+
+@media (max-width: 684px) {
+  .container::before { left: calc(var(--gutter) - 20px); }
+  .container::after { right: calc(var(--gutter) - 20px); }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.content:focus {
+  outline: none;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.5rem;
+  padding: 2.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* Listing pages (home, sections, taxonomies) */
+.listing {
+  padding: 1rem 0 2rem;
+}
+
+.listing__title {
+  margin: 0 0 1rem;
+  color: var(--accent);
+}
+
+.listing__intro {
+  margin-bottom: 1.5rem;
+}
+
+.listing__empty {
+  padding: 3rem 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.not-found {
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.not-found__code {
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(4rem, 18vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.not-found h1 {
+  margin: 1rem 0 0.5rem;
+}
+
+.not-found p:not(.not-found__code) {
+  margin: 0 0 2rem;
+  color: var(--muted);
+}

@@ -1,0 +1,10 @@
+{{- /* Returns the URL of the page's cover image: a page resource if one matches, otherwise the param as a site path. */ -}}
+{{- $url := "" -}}
+{{- with .Params.cover -}}
+  {{- with $.Resources.GetMatch . -}}
+    {{- $url = .RelPermalink -}}
+  {{- else -}}
+    {{- $url = . | relURL -}}
+  {{- end -}}
+{{- end -}}
+{{- return $url -}}

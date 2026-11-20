@@ -1,0 +1,27 @@
+/* Print: content only, ink-friendly. */
+@media print {
+  :root { color-scheme: light; }
+
+  body { box-shadow: none; }
+
+  .container::before,
+  .container::after,
+  .header,
+  .footer,
+  .filters,
+  .pager,
+  .post-nav,
+  .comments,
+  .heading-anchor,
+  .skip-link {
+    display: none !important;
+  }
+
+  .container { display: block; padding: 0; }
+
+  .prose a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    color: var(--muted);
+    font-size: 0.8em;
+  }
+}

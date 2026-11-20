@@ -1,0 +1,3 @@
+{{- /* Returns the site's regular pages in its main sections (params.mainSections, default "posts"). */ -}}
+{{- $sections := site.Params.mainSections | default (slice "posts") -}}
+{{- return where site.RegularPages "Section" "in" $sections -}}

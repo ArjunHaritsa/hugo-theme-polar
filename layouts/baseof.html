@@ -1,0 +1,21 @@
+{{- $accent := partial "accent.html" . -}}
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default site.Language.Lang }}" data-scheme="auto" data-accent="{{ $accent.name }}">
+<head>
+  {{- partial "head/appearance-init.html" . }}
+  {{- partial "head/meta.html" . }}
+  {{- partial "head/styles.html" . }}
+  {{- block "head" . }}{{ end }}
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ T "skipToContent" }}</a>
+  <div class="container">
+    {{ partial "header.html" . }}
+    <main id="main" class="content" tabindex="-1">
+      {{- block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+  </div>
+  {{- partial "head/scripts.html" . }}
+</body>
+</html>

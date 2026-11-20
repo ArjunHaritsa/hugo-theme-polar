@@ -1,0 +1,15 @@
+{{- /*
+  Giscus comments. The client script is injected by js/comments.js so it can start
+  with the active colour scheme and follow later changes.
+*/ -}}
+{{- with site.Params.giscus }}
+{{- $.Store.Set "scripts" (($.Store.Get "scripts") | default slice | append "comments") }}
+<section class="comments" aria-label="Comments"
+         data-giscus
+         data-repo="{{ .repo }}"
+         data-repo-id="{{ .repoId }}"
+         data-category="{{ .category }}"
+         data-category-id="{{ .categoryId }}"
+         data-mapping="{{ .mapping | default "pathname" }}"
+         data-lang="{{ .lang | default site.Language.Lang }}"></section>
+{{- end }}

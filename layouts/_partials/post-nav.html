@@ -1,0 +1,18 @@
+{{- /* Links to the neighbouring posts in the same section. */ -}}
+{{- if or .NextInSection .PrevInSection }}
+<nav class="post-nav" aria-labelledby="post-nav-title">
+  <h2 class="post-nav__title" id="post-nav-title">{{ T "readOtherPosts" }}</h2>
+  <div class="post-nav__links">
+    {{- with .NextInSection }}
+    <a class="post-nav__link post-nav__link--newer" href="{{ .RelPermalink }}" rel="prev"{{ with .Params.language }} lang="{{ . }}"{{ end }}>
+      <span aria-hidden="true">←</span><span class="post-nav__label">{{ .Title }}</span>
+    </a>
+    {{- end }}
+    {{- with .PrevInSection }}
+    <a class="post-nav__link post-nav__link--older" href="{{ .RelPermalink }}" rel="next"{{ with .Params.language }} lang="{{ . }}"{{ end }}>
+      <span class="post-nav__label">{{ .Title }}</span><span aria-hidden="true">→</span>
+    </a>
+    {{- end }}
+  </div>
+</nav>
+{{- end }}

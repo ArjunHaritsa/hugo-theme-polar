@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="listing">
+  <h1 class="listing__title">{{ if eq .Data.Plural "tags" }}#{{ end }}{{ .Title }}</h1>
+  {{- with .Content }}
+  <div class="listing__intro prose">{{ . }}</div>
+  {{- end }}
+  {{ partial "post-archive.html" .RegularPages }}
+</div>
+{{ end }}

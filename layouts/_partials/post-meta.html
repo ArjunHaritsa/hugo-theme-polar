@@ -1,0 +1,19 @@
+{{- /* Date, reading time and categories. Context: dict "page" Page, "words" bool. */ -}}
+{{- $p := .page -}}
+<div class="meta">
+  {{- if not $p.Date.IsZero }}
+  <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_medium" }}</time>
+  {{- if and site.Params.showLastUpdated (gt $p.Lastmod $p.Date) }}
+  <span>{{ T "updated" (dict "Date" ($p.Lastmod | time.Format ":date_medium")) }}</span>
+  {{- end }}
+  {{- end }}
+  {{- with $p.Params.author }}
+  <span>{{ . }}</span>
+  {{- end }}
+  {{- if $p.Param "readingTime" }}
+  <span>{{ T "minRead" (dict "Count" $p.ReadingTime) }}{{ if .words }} · {{ T "words" (dict "Count" $p.WordCount) }}{{ end }}</span>
+  {{- end }}
+  {{- range $p.Params.categories }}
+  <span class="meta__category">{{ . }}</span>
+  {{- end }}
+</div>

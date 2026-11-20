@@ -1,0 +1,12 @@
+{{- $lang := .Params.language -}}
+<article class="post-row"
+         data-language="{{ $lang }}"
+         data-categories="{{ delimit (.Params.categories | default slice) "|" }}"
+         data-search="{{ delimit (slice .Title (delimit (.Params.tags | default slice) " ") (.Summary | plainify)) " " | lower }}">
+  {{ partial "post-meta.html" (dict "page" .) }}
+  <h2 class="post-row__title"{{ with $lang }} lang="{{ . }}"{{ end }}>
+    <a href="{{ .RelPermalink }}">{{ .Title }}<span class="post-row__arrow" aria-hidden="true">↗</span></a>
+  </h2>
+  <p class="post-row__summary"{{ with $lang }} lang="{{ . }}"{{ end }}>{{ .Summary | plainify | strings.TrimSpace | truncate 220 }}</p>
+  {{ partial "post-tags.html" . }}
+</article>

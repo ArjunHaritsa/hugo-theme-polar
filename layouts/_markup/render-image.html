@@ -1,0 +1,23 @@
+{{- /*
+  Content images: lazy-loaded, with intrinsic dimensions when the image is a page or
+  global resource (prevents layout shift). Paths fall back to site-relative URLs.
+*/ -}}
+{{- $src := .Destination -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- $u := urls.Parse .Destination -}}
+{{- if not $u.IsAbs -}}
+  {{- with or (.Page.Resources.Get $u.Path) (resources.Get $u.Path) -}}
+    {{- $src = .RelPermalink -}}
+    {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
+      {{- $width = .Width -}}
+      {{- $height = .Height -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $src = strings.TrimPrefix "/" $u.Path | relURL -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ .PlainText }}" loading="lazy" decoding="async"
+  {{- with $width }} width="{{ . }}" height="{{ $height }}"{{ end }}
+  {{- with .Title }} title="{{ . }}"{{ end }}>
+{{- /**/ -}}

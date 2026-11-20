@@ -1,0 +1,14 @@
+{{- /*
+  Returns the default accent: the palette entry named by params.accent,
+  falling back to the first entry in data/accents.toml.
+*/ -}}
+{{- $palette := hugo.Data.accents.palette -}}
+{{- $accent := index $palette 0 -}}
+{{- with site.Params.accent -}}
+  {{- with where $palette "name" . -}}
+    {{- $accent = index . 0 -}}
+  {{- else -}}
+    {{- warnf "polar: params.accent %q is not in data/accents.toml; using %q" . $accent.name -}}
+  {{- end -}}
+{{- end -}}
+{{- return $accent -}}
