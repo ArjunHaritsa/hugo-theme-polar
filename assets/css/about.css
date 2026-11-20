@@ -17,7 +17,12 @@
 .tagline {
   position: relative;
   margin: 0 0 2.5rem;
-  padding-left: 1.5rem;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  /* A recessed command-line surface that follows the colour scheme. */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg-raised), var(--text) 4%);
+  box-shadow: inset 0 1px 3px color-mix(in srgb, black 25%, transparent);
   color: var(--text);
   /* Contextual alternates would reshape glyph pairs as the typed/untyped boundary
      moves, which reads as jitter; plain monospace glyphs keep every cell fixed. */
@@ -28,7 +33,7 @@
 .tagline::before {
   content: ">";
   position: absolute;
-  left: 0;
+  left: 1rem;
   color: var(--accent);
 }
 

@@ -83,13 +83,21 @@ function animate(root) {
 
   // Cursor geometry, measured from the laid-out cells (re-measured on resize).
   let boxes = [];
+  let cursorY = null;
   const measure = line => {
     boxes = line.cells.map(c => ({ x: c.offsetLeft, y: c.offsetTop, w: c.offsetWidth, h: c.offsetHeight }));
   };
+  const after = box => ({ ...box, x: box.x + box.w });
   const place = (line, count) => {
     if (!boxes.length) return;
-    const last = boxes[boxes.length - 1];
-    const box = count < boxes.length ? boxes[count] : { ...last, x: last.x + last.w };
+    // The cursor sits on the next character's cell. At the end of the text, or when the
+    // next character is a space (which may be collapsed at a line break and has no reliable
+    // position), it sits right after the previous character instead.
+    const atSpace = count > 0 && count < boxes.length && /\s/.test(line.chars[count]);
+    const box = count >= boxes.length ? after(boxes[boxes.length - 1]) : atSpace ? after(boxes[count - 1]) : boxes[count];
+    // Glide along a line, but jump (no diagonal sweep) when moving to another line.
+    cursor.style.transition = box.y === cursorY ? "" : "none";
+    cursorY = box.y;
     cursor.style.height = `${box.h}px`;
     cursor.style.transform = `translate(${box.x}px, ${box.y}px)`;
   };
@@ -137,7 +145,7 @@ function animate(root) {
       if (shown === 0) enter("pause", now);
     } else if (elapsed >= PAUSE_MS) {
       lineIndex = (lineIndex + 1) % lines.length;
-      activate(lineIndex);
+      activate(lineIndex); // also re-measures, so each pass starts from fresh geometry
       place(lines[lineIndex], 0);
       enter("type", now);
     }
@@ -172,10 +180,15 @@ function animate(root) {
     onScreen ? start() : stop();
   }).observe(root);
   document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
-  new ResizeObserver(() => {
+  // Positions change whenever text re-flows: on resize, and when web fonts finish loading
+  // (fallback-font metrics can wrap differently without changing the stage's size).
+  const remeasure = () => {
     measure(lines[lineIndex]);
     place(lines[lineIndex], shown);
-  }).observe(stage);
+  };
+  new ResizeObserver(remeasure).observe(stage);
+  document.fonts?.ready.then(remeasure);
+  document.fonts?.addEventListener("loadingdone", remeasure);
 }
 
 if (!prefersReducedMotion()) {
