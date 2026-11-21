@@ -65,6 +65,7 @@
 
 .tagline .ch {
   opacity: 0;
+  transition: opacity 80ms linear;
 }
 
 .tagline .ch.on {
@@ -78,7 +79,7 @@
   width: 0.6em;
   height: 1.25em;
   background: var(--accent);
-  transition: transform 60ms linear;
+  transition: transform 50ms linear;
   will-change: transform;
   pointer-events: none;
 }

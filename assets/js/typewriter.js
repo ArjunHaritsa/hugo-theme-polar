@@ -3,10 +3,11 @@
 // Smoothness comes from never changing layout after load: every character of every line
 // is laid out once (lines stacked in one grid cell), typing only flips opacity, and the
 // block cursor moves with a transform. A single requestAnimationFrame loop is driven by
-// elapsed time, so dropped frames never change the pace. Pauses when off-screen or in a
+// elapsed time at an even cadence, so dropped frames never change the pace. Pauses when off-screen or in a
 // background tab. Screen readers get the plain text; the animation is aria-hidden.
 import { prefersReducedMotion } from "./lib/scheme.js";
 
+const TYPE_MS = 50;
 const HOLD_MS = 5000;
 const ERASE_MS = 18;
 const PAUSE_MS = 600;
@@ -24,28 +25,8 @@ const el = (tag, className, text) => {
   return node;
 };
 
-// Small seeded PRNG (mulberry32), so each line has the same human rhythm on every pass.
-function random(seed) {
-  return () => {
-    seed = (seed + 0x6d2b79f5) | 0;
-    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-/** Cumulative timestamps (ms) at which each character appears. */
-function schedule(chars, seed) {
-  const rand = random(seed);
-  let t = 0;
-  return chars.map((ch, i) => {
-    const previous = chars[i - 1];
-    t += 40 + rand() * 35;
-    if (previous && /[,.;:!?…]/.test(previous)) t += 180;
-    else if (previous === " ") t += 90;
-    return t;
-  });
-}
+/** Timestamps (ms) at which each character appears: an even, linear cadence. */
+const schedule = chars => chars.map((_, i) => (i + 1) * TYPE_MS);
 
 /** Builds one line: words kept whole (nowrap), spaces as break points, one span per character. */
 function buildLine(text) {
@@ -73,7 +54,7 @@ function animate(root) {
   const stage = el("span", "tagline__stage");
   stage.setAttribute("aria-hidden", "true");
   const lines = texts.map(buildLine);
-  lines.forEach((line, i) => (line.times = schedule(line.chars, i + 1)));
+  lines.forEach(line => (line.times = schedule(line.chars)));
   const cursor = el("span", "tagline__cursor");
   stage.append(...lines.map(l => l.node), cursor);
 
